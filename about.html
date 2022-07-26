@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+<meta charset="utf-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<meta name="About" content="">
+
+<meta name="author" content="Anna Devadas">
+
+<link rel="icon" href="images/your-icon-here.png">
+
+<title>About Page</title>
+
+<!-- load Bootstrap's CSS, as well as your own -->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    
+<link href="https://fonts.googleapis.com/css2?family=Crimson+Text&family=PT+Sans+Narrow:wght@400;700&display=swap" rel="stylesheet">
+
+<link href="css/custom.css" rel="stylesheet">
+
+</head>
+
+<body class="home">
+
+    <div id="header" class="container-fluid">   
+        <div id="homebtn">
+            <a href="index.html">
+            <img class="logo" src="images/logo2.png" alt="home icon"></a>
+        </div><!--homebtn-->
+        <div class="col-12" id="navigation">
+            <ul class="nav justify-content-end">
+                <li class="nav-item">
+                    <a class="nav-link" id="navText" href="index.html">PROJECTS</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="navText" href="about.html">ABOUT</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="navText" href="contact.html">CONTACT</a>
+                </li>
+            </ul>
+          </div><!-- 12 -->
+        <div class="col-12" id="head-text"><h1 id="main-title">About me</h1>
+            <p class="subheading">a brief overview of my academic and professional career</p>
+        </div><!-- 12 -->
+    </div> <!-- /container-fluid -->
+    
+    <div id="body-content" class="container-fluid">
+        <div id="introduction" class="row justify-content-center">
+            <div id="bio" class="col-12 col-md-5 col-xl-5">
+                <h2>hello! <br>my name is <span id="color-text">anna</span></h2>
+                <p id="bio-text">I currently work as a research assistant in a Malaria Biology Lab in Silver Spring, MD. <br> As a recent graduate, I have a background in biochemistry and computer science, specializing in bioinformatics applications and object-oriented programming. I am looking to gain experience in developing attractive, responsive web and mobile applications to help diversify my portfolio.</p>
+            </div><!--6-->
+            <div class="col-12 col-md-7 col-xl-5">
+                <div id="mapdiv"></div><!--mapdiv-->
+            </div><!--6-->
+            <div id="resume" class="col-12">
+                <h2>my <span id="color-text">resume</span>, as a timeline</h2>
+               <iframe id="timeline" src='https://cdn.knightlab.com/libs/timeline3/latest/embed/index.html?source=1l--6k2p6V1iJfAYOP6sW1pq79qBzW8H7w2B3Gf7b_EI&font=Default&lang=en&initial_zoom=2&height=580' height='580' webkitallowfullscreen mozallowfullscreen allowfullscreen frameborder='0'></iframe>
+            </div><!--12-->
+        </div><!--row-->
+        
+    </div><!--container-->
+
+<!-- load our external JavaScript assets such as Bootstrap -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    
+<!-- load the openlayers library, so we can overlay objects on customized maps-->
+<script src="http://www.openlayers.org/api/OpenLayers.js"></script>
+
+<!-- load the stamen map tile library to use custom tiles -->
+<script type="text/javascript" src="http://maps.stamen.com/js/tile.stamen.js?v1.3.0"></script>
+
+    <script>
+    //create a map, its name must match the ID name in the HTML, eg, mapdiv
+    map = new OpenLayers.Map("mapdiv");
+
+    //watercolor, terrain, toner
+    map.addLayer(new OpenLayers.Layer.Stamen("toner"));
+
+    //set default location, change 1st line ONLY: longitude, latitude
+    //change longitude & latitude of your location here
+    var lonLat = new OpenLayers.LonLat( -77.027023, 38.997662 ).transform(
+                new OpenLayers.Projection("EPSG:4326"), // transform from WGS 1984
+                map.getProjectionObject() // to Spherical Mercator Projection
+                );
+
+    //set default zoom level, 1-18
+    //change here
+    var zoom=15;
+
+    //create a markers layer to hold your marker/location icon
+    var markers = new OpenLayers.Layer.Markers( "Markers" );
+
+    //add that layer holding the location icon to your map
+    map.addLayer(markers);
+
+    //the location of your location icon (use a different icon, obviously)
+    //change here
+    var icon = new OpenLayers.Icon('https://toppng.com/uploads/preview/map-marker-icon-600x-map-marker-11562939743ayfahlvygl.png');
+
+    //add a marker (aka, an icon) to the map markers layer &
+    //place the icon at the longitude & latitude defined above (lonLat)
+    markers.addMarker(new OpenLayers.Marker(lonLat,icon));
+
+    //add the map to the DIV with the ID "mapdiv", defined above, and
+    //center it to the default location, defined above, and 
+    //go to its zoom level, defined above 
+    map.setCenter (lonLat, zoom);
+
+    </script>
+    <!-- end the custom map code -->
+
+</body>
+</html>
